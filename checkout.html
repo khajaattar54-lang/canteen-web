@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout — Canteen</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .payment-options { display: flex; gap: 16px; margin-bottom: 24px; }
+    .payment-card { flex: 1; background: var(--card); border: 2px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 16px; text-align: center; cursor: pointer; transition: all 0.3s ease; }
+    .payment-card:hover { border-color: rgba(255,255,255,0.3); }
+    .payment-card.selected { border-color: var(--accent); background: rgba(249, 115, 22, 0.1); box-shadow: 0 0 15px var(--accent-glow); }
+    .payment-icon { font-size: 28px; margin-bottom: 8px; }
+    .payment-title { font-weight: 600; font-size: 14px; font-family: 'Outfit', sans-serif; }
+  </style>
+</head>
+<body>
+  <script>
+    if (!sessionStorage.getItem('loggedInUser')) window.location.href = 'login.html';
+  </script>
+
+  <nav class="navbar">
+    <h1>🍽️ Campus Canteen</h1>
+    <div class="nav-links" style="display: flex; align-items: center;"></div>
+  </nav>
+
+  <div class="container" style="max-width: 700px;">
+    <h2 class="page-title">Checkout</h2>
+    <p class="page-subtitle">Review your order and pick a time</p>
+    
+    <div id="cartItems" style="margin-bottom: 32px;"></div>
+    
+    <h3 style="margin-bottom: 16px; font-family: 'Outfit';">Pick a pickup slot</h3>
+    <div class="slots-grid" id="slotsGrid"></div>
+
+    <h3 style="margin-bottom: 16px; font-family: 'Outfit'; margin-top: 32px;">Payment Method</h3>
+    <div class="payment-options">
+      <div class="payment-card selected" id="payUpi" onclick="selectPayment('UPI')">
+        <div class="payment-icon">📱</div>
+        <div class="payment-title">UPI (GPay/PhonePe)</div>
+      </div>
+      <div class="payment-card" id="payCash" onclick="selectPayment('Cash')">
+        <div class="payment-icon">💵</div>
+        <div class="payment-title">Cash at Counter</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 32px;">
+      <input type="text" id="studentName" placeholder="Your name" style="width:100%;padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);background:var(--card);color:var(--text);font-family:inherit;font-size:14px;margin-bottom:16px;">
+      <button class="btn btn-primary" style="width:100%; font-size: 16px;" id="confirmBtn">Confirm Order</button>
+    </div>
+  </div>
+
+  <script type="module" src="js/checkout.js"></script>
+  <script src="js/navbar.js"></script>
+  <script>
+    window.currentPayment = 'UPI'; 
+    window.selectPayment = function(method) {
+      window.currentPayment = method;
+      document.getElementById('payUpi').classList.remove('selected');
+      document.getElementById('payCash').classList.remove('selected');
+      if (method === 'UPI') document.getElementById('payUpi').classList.add('selected');
+      else document.getElementById('payCash').classList.add('selected');
+    };
+  </script>
+</body>
+</html>

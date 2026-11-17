@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book a Table — Canteen</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
+</head>
+<body>
+  <script>
+    if (!sessionStorage.getItem('loggedInUser')) window.location.href = 'login.html';
+  </script>
+
+  <nav class="navbar">
+    <h1>🍽️ Campus Canteen</h1>
+    <div class="nav-links" style="display: flex; align-items: center;"></div>
+  </nav>
+
+  <div class="container">
+    <h2 class="page-title">Reserve a Table</h2>
+    <p class="page-subtitle">Skip the wait and book your spot in advance</p>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 32px;">
+      <div style="background: var(--card); padding: 32px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); height: fit-content;">
+        <h3 style="font-family: 'Outfit'; margin-bottom: 20px; font-size: 20px;">New Reservation</h3>
+        <input type="text" id="bookName" placeholder="Your Name" style="width: 100%; padding: 14px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.2); color: white; margin-bottom: 16px; font-family: 'Inter'; box-sizing: border-box;">
+        
+        <div style="display: flex; gap: 16px; margin-bottom: 16px;">
+          <div style="flex: 1;">
+            <label style="font-size: 12px; color: var(--muted); margin-bottom: 4px; display: block;">Date</label>
+            <input type="text" id="bookDate" placeholder="Select Date" style="width: 100%; padding: 14px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.2); color: white; font-family: 'Inter'; cursor: pointer; box-sizing: border-box;">
+          </div>
+          <div style="flex: 1;">
+            <label style="font-size: 12px; color: var(--muted); margin-bottom: 4px; display: block;">Time</label>
+            <input type="text" id="bookTime" placeholder="Select Time" style="width: 100%; padding: 14px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.2); color: white; font-family: 'Inter'; cursor: pointer; box-sizing: border-box;">
+          </div>
+        </div>
+
+        <label style="font-size: 12px; color: var(--muted); margin-bottom: 4px; display: block;">Table Number</label>
+        <select id="bookTableNum" style="width: 100%; padding: 14px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.2); color: white; margin-bottom: 16px; font-family: 'Inter'; box-sizing: border-box; cursor: pointer;">
+          <option value="Table 1">Table 1</option>
+          <option value="Table 2">Table 2</option>
+          <option value="Table 3">Table 3</option>
+          <option value="Table 4">Table 4</option>
+          <option value="Table 5">Table 5</option>
+          <option value="Table 6">Table 6</option>
+        </select>
+
+        <label style="font-size: 12px; color: var(--muted); margin-bottom: 4px; display: block;">Number of Guests</label>
+        <select id="bookGuests" style="width: 100%; padding: 14px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.2); color: white; margin-bottom: 24px; font-family: 'Inter'; box-sizing: border-box; cursor: pointer;">
+          <option value="1">1 Person</option>
+          <option value="2">2 People</option>
+          <option value="3">3 People</option>
+          <option value="4">4 People</option>
+          <option value="5">5+ People (Large Group)</option>
+        </select>
+        <button class="btn btn-primary" id="submitBookingBtn" style="width: 100%;">Confirm Reservation</button>
+      </div>
+      <div>
+        <h3 style="font-family: 'Outfit'; margin-bottom: 20px; font-size: 20px;">Upcoming Reservations</h3>
+        <div id="bookingsList"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      flatpickr("#bookDate", { dateFormat: "Y-m-d", minDate: "today", theme: "dark", disableMobile: true });
+      flatpickr("#bookTime", { enableTime: true, noCalendar: true, dateFormat: "h:i K", time_24hr: false, disableMobile: true });
+    });
+  </script>
+  <script type="module" src="js/tables.js"></script>
+  <script src="js/navbar.js"></script>
+</body>
+</html>
